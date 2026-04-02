@@ -1,0 +1,49 @@
+{
+  "name": "JuiceBot",
+  "version": "2.0.0",
+  "description": "JuiceBot 2.0 - Autonomous agent for task automation and assistance",
+  "agent": {
+    "type": "conversational",
+    "capabilities": [
+      "task_automation",
+      "web_search",
+      "code_generation",
+      "data_analysis",
+      "file_management"
+    ],
+    "model": "gpt-4",
+    "maxTokens": 4096,
+    "temperature": 0.7
+  },
+  "commands": [
+    {
+      "name": "help",
+      "description": "Display available commands and usage information"
+    },
+    {
+      "name": "run",
+      "description": "Execute a task or workflow",
+      "args": ["task"]
+    },
+    {
+      "name": "status",
+      "description": "Check the current status of JuiceBot"
+    },
+    {
+      "name": "reset",
+      "description": "Reset the agent state and conversation history"
+    }
+  ],
+  "config": {
+    "logLevel": "info",
+    "timeout": 30000,
+    "retryAttempts": 3,
+    "outputFormat": "markdown"
+  },
+  "metadata": {
+    "author": "HustleHack",
+    "repository": "https://github.com/HustleHack/JuiceBot2",
+    "license": "MIT",
+    "tags": ["agent", "automation", "bot", "ai"]
+  }
+}
