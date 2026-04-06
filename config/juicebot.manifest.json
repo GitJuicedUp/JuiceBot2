@@ -38,7 +38,8 @@
     "logLevel": "info",
     "timeout": 30000,
     "retryAttempts": 3,
-    "outputFormat": "markdown"
+    "outputFormat": "markdown",
+    "maxHistoryMessages": 40
   },
   "metadata": {
     "author": "HustleHack",

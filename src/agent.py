@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import random
 import time
 from typing import Any
 
@@ -68,17 +69,19 @@ class Agent:
     # ------------------------------------------------------------------
 
     def _build_messages(self) -> list[dict[str, str]]:
-        return [{"role": "system", "content": _SYSTEM_PROMPT}] + self.history
+        history = self.history[-self.config.max_history_messages :]
+        return [{"role": "system", "content": _SYSTEM_PROMPT}] + history
 
     def _call_with_retry(self) -> str:
         last_error: Exception | None = None
         timeout_s = self.config.timeout / 1000
+        messages = self._build_messages()
 
         for attempt in range(1, self.config.retry_attempts + 1):
             try:
                 response: Any = self._client.chat.completions.create(
                     model=self.config.model,
-                    messages=self._build_messages(),  # type: ignore[arg-type]
+                    messages=messages,  # type: ignore[arg-type]
                     max_tokens=self.config.max_tokens,
                     temperature=self.config.temperature,
                     timeout=timeout_s,
@@ -86,8 +89,8 @@ class Agent:
                 return response.choices[0].message.content or ""
             except openai.RateLimitError as exc:
                 last_error = exc
-                wait = 2**attempt
-                logger.warning("Rate limit hit (attempt %d/%d); retrying in %ds", attempt, self.config.retry_attempts, wait)
+                wait = random.uniform(0, 2**attempt)
+                logger.warning("Rate limit hit (attempt %d/%d); retrying in %.1fs", attempt, self.config.retry_attempts, wait)
                 time.sleep(wait)
             except openai.APITimeoutError as exc:
                 last_error = exc

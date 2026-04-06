@@ -38,6 +38,7 @@ class Config:
         self.timeout: int = int(cfg.get("timeout", 30000))
         self.retry_attempts: int = int(cfg.get("retryAttempts", 3))
         self.output_format: str = cfg.get("outputFormat", "markdown")
+        self.max_history_messages: int = int(cfg.get("maxHistoryMessages", 40))
 
         self.commands: list[dict[str, Any]] = manifest.get("commands", [])
 

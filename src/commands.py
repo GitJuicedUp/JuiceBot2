@@ -32,7 +32,7 @@ def handle_status(agent: "Agent", *_args: str) -> str:
         f"- Temperature: `{agent.config.temperature}`\n"
         f"- Max tokens: `{agent.config.max_tokens}`\n"
         f"- Output format: `{agent.config.output_format}`\n"
-        f"- Conversation turns: `{history_len}`\n"
+        f"- Conversation messages: `{history_len}`\n"
         f"- State: `{'active' if agent.active else 'inactive'}`"
     )
 
