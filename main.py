@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """JuiceBot 2.0 — CLI entry point."""
 
+import argparse
 import logging
 import os
 import sys
@@ -18,6 +19,14 @@ def _configure_logging(level: str) -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="JuiceBot 2.0 — autonomous AI agent")
+    parser.add_argument(
+        "--mic",
+        action="store_true",
+        help="Enable microphone streaming mode (requires speechrecognition and pyaudio)",
+    )
+    args = parser.parse_args()
+
     config = Config()
     _configure_logging(config.log_level)
 
@@ -28,6 +37,18 @@ def main() -> None:
     agent = Agent(config=config, api_key=api_key)
 
     print(f"{config.name} v{config.version} — type 'help' for available commands, 'quit' to exit.\n")
+
+    if args.mic:
+        from src.microphone import MicrophoneStream
+
+        stream = MicrophoneStream(
+            api_key=api_key,
+            language=config.mic_language,
+            listen_timeout=config.mic_listen_timeout,
+            phrase_limit=config.mic_phrase_limit,
+        )
+        stream.run(agent)
+        return
 
     while True:
         try:

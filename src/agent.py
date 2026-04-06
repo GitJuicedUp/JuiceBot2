@@ -89,7 +89,7 @@ class Agent:
                 return response.choices[0].message.content or ""
             except openai.RateLimitError as exc:
                 last_error = exc
-                wait = random.uniform(0, 2**attempt)
+                wait = random.uniform(1, 2**attempt)
                 logger.warning("Rate limit hit (attempt %d/%d); retrying in %.1fs", attempt, self.config.retry_attempts, wait)
                 time.sleep(wait)
             except openai.APITimeoutError as exc:

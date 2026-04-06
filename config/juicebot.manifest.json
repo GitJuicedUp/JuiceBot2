@@ -39,7 +39,10 @@
     "timeout": 30000,
     "retryAttempts": 3,
     "outputFormat": "markdown",
-    "maxHistoryMessages": 40
+    "maxHistoryMessages": 40,
+    "micLanguage": "en-US",
+    "micListenTimeout": 10,
+    "micPhraseLimit": 60
   },
   "metadata": {
     "author": "HustleHack",
