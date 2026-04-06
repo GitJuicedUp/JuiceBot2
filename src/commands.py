@@ -64,14 +64,14 @@ def handle_run(agent: "Agent", *args: str) -> str:
             f"({', '.join(agent.config.capabilities)}): {task}"
         )
 
-    def _summarise_step() -> str:
-        return agent.chat("Summarise the outcome of the task you just completed in 2-3 sentences.")
+    def _summarize_step() -> str:
+        return agent.chat("Summarize the outcome of the task you just completed in 2-3 sentences.")
 
     workflow = (
         Workflow(name=task)
         .add_step("plan", _plan_step)
         .add_step("execute", _execute_step)
-        .add_step("summarise", _summarise_step)
+        .add_step("summarize", _summarize_step)
     )
 
     result = workflow.run()
