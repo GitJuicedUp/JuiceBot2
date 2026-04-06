@@ -38,6 +38,10 @@ class Config:
         self.timeout: int = int(cfg.get("timeout", 30000))
         self.retry_attempts: int = int(cfg.get("retryAttempts", 3))
         self.output_format: str = cfg.get("outputFormat", "markdown")
+        self.max_history_messages: int = int(cfg.get("maxHistoryMessages", 40))
+        self.mic_language: str = cfg.get("micLanguage", "en-US")
+        self.mic_listen_timeout: int = int(cfg.get("micListenTimeout", 10))
+        self.mic_phrase_limit: int = int(cfg.get("micPhraseLimit", 60))
 
         self.commands: list[dict[str, Any]] = manifest.get("commands", [])
 
