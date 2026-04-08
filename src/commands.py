@@ -45,6 +45,43 @@ def handle_reset(agent: "Agent", *_args: str) -> str:
     return "Agent state and conversation history have been reset."
 
 
+def handle_music(agent: "Agent", *args: str) -> str:
+    """Generate music from a text prompt using the Lyria 3 API."""
+    from src.music import MusicGenerator
+
+    prompt = " ".join(args).strip()
+    if not prompt:
+        return "Usage: `music <prompt>` — describe the music you want to generate."
+
+    clip = "--clip" in args
+    if clip:
+        prompt_words = [w for w in args if w != "--clip"]
+        prompt = " ".join(prompt_words).strip()
+        if not prompt:
+            return "Usage: `music [--clip] <prompt>` — describe the music you want to generate."
+
+    import os
+
+    project = os.environ.get("GOOGLE_CLOUD_PROJECT")
+    if not project:
+        return (
+            "GOOGLE_CLOUD_PROJECT is not set. "
+            "Please set it to your Google Cloud project ID before using the music command."
+        )
+
+    logger.info("Generating music: clip=%s, prompt=%s", clip, prompt)
+
+    try:
+        generator = MusicGenerator(project=project)
+        result = generator.generate(prompt, clip=clip)
+        return result
+    except RuntimeError as exc:
+        return f"Music generation unavailable: {exc}"
+    except Exception as exc:  # noqa: BLE001
+        logger.error("Music generation failed: %s", exc)
+        return f"Music generation failed: {exc}"
+
+
 def handle_run(agent: "Agent", *args: str) -> str:
     """Execute a named task using the workflow engine."""
     from src.workflow import Workflow

@@ -10,7 +10,7 @@ from typing import Any
 import openai
 
 from src.config import Config
-from src.commands import handle_help, handle_run, handle_status, handle_reset
+from src.commands import handle_help, handle_music, handle_run, handle_status, handle_reset
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +32,7 @@ class Agent:
         self._client = openai.OpenAI(api_key=api_key)
         self._command_handlers = {
             "help": handle_help,
+            "music": handle_music,
             "status": handle_status,
             "reset": handle_reset,
             "run": handle_run,

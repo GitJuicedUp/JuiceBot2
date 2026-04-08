@@ -9,7 +9,8 @@
       "web_search",
       "code_generation",
       "data_analysis",
-      "file_management"
+      "file_management",
+      "music_generation"
     ],
     "model": "gpt-4",
     "maxTokens": 4096,
@@ -19,6 +20,11 @@
     {
       "name": "help",
       "description": "Display available commands and usage information"
+    },
+    {
+      "name": "music",
+      "description": "Generate music from a text prompt using the Lyria 3 API",
+      "args": ["prompt"]
     },
     {
       "name": "run",

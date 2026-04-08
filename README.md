@@ -54,6 +54,7 @@ flake8 main.py src/ tests/
 - **Code Generation** — scaffold and write code on demand
 - **Data Analysis** — process and interpret structured data
 - **File Management** — read, write, and organize files
+- **Music Generation** — create original tracks and clips from text prompts via Lyria 3
 
 ## Configuration
 
@@ -75,9 +76,30 @@ Key runtime options:
 | Command | Description |
 |---|---|
 | `help` | Display available commands and usage information |
+| `music <prompt>` | Generate a full music track from a text prompt (requires `GOOGLE_CLOUD_PROJECT`) |
+| `music --clip <prompt>` | Generate a 30-second music clip instead of a full track |
 | `run <task>` | Execute a task or workflow |
 | `status` | Check the current status of JuiceBot |
 | `reset` | Reset the agent state and conversation history |
+
+### Music generation
+
+The `music` command uses Google's [Lyria 3](https://cloud.google.com/vertex-ai/generative-ai/docs/audio/music-generation) model via Vertex AI.
+
+Prerequisites:
+- Enable the Vertex AI API in your Google Cloud project
+- Set the `GOOGLE_CLOUD_PROJECT` environment variable
+- Authenticate with: `gcloud auth application-default login`
+
+Generated audio files are saved to `audio/music/generated/`.
+
+```bash
+# Full track (up to ~3 minutes)
+You: music Sophisticated jazz with piano, upright bass and brushed drums
+
+# 30-second clip
+You: music --clip Ambient lo-fi beats with soft pads and vinyl crackle
+```
 
 ## License
 
